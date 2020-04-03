@@ -29,6 +29,8 @@
 #include "VMapDefinitions.h"
 #include "Errors.h"
 
+#include "fmt/printf.h"
+
 using G3D::Vector3;
 
 namespace VMAP
@@ -359,9 +361,9 @@ namespace VMAP
         return StaticMapTree::CanLoadMap(std::string(basePath), mapId, x, y);
     }
 
-    void VMapManager2::getInstanceMapTree(InstanceTreeMap &instanceMapTree)
-    {
-        instanceMapTree = iInstanceMapTrees;
-    }
+    //void VMapManager2::getInstanceMapTree(InstanceTreeMap &instanceMapTree)
+    //{
+    //    instanceMapTree = iInstanceMapTrees;
+    //}
 
 } // namespace VMAP

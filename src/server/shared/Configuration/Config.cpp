@@ -52,11 +52,11 @@ namespace
         }
         catch (bpt::ptree_bad_path)
         {
-            printf("Missing name %s in config file %s, add \"%s\" to this file", name, _filename.c_str(), name);
+            printf("%s = \n", name);
         }
         catch (bpt::ptree_bad_data)
         {
-            printf("Bad value defined for name %s in config file %s", name, _filename.c_str());
+            printf("Bad value defined for name %s in config file %s \n", name, _filename.c_str());
         }
 
         return def;
@@ -101,12 +101,14 @@ std::string GetStringDefault(std::string const& name, const std::string &def)
 std::string GetStringDefault(const char* name, const std::string &def)
 {
     std::string val = GetValueHelper(name, def);
+    //printf(" %s = %s \n", name, val.c_str());
     val.erase(std::remove(val.begin(), val.end(), '"'), val.end());
     return val;
 };
 
 bool GetBoolDefault(const char* name, bool def)
 {
+    //printf(" %s = %u \n", name, def);
     std::string val = GetValueHelper(name, std::string(def ? "1" : "0"));
     val.erase(std::remove(val.begin(), val.end(), '"'), val.end());
     return StringToBool(val);
@@ -114,11 +116,13 @@ bool GetBoolDefault(const char* name, bool def)
 
 int GetIntDefault(const char* name, int def)
 {
+    //printf(" %s = %u \n", name, def);
     return GetValueHelper(name, def);
 };
 
 float GetFloatDefault(const char* name, float def)
 {
+    //printf(" %s = %f \n", name, def);
     return GetValueHelper(name, def);
 };
 

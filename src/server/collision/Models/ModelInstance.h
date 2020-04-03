@@ -72,7 +72,7 @@ namespace VMAP
             void intersectPoint(G3D::Vector3 const& p, AreaInfo &info) const;
             bool GetLocationInfo(G3D::Vector3 const& p, LocationInfo &info) const;
             bool GetLiquidLevel(G3D::Vector3 const& p, LocationInfo &info, float &liqHeight) const;
-            WorldModel* getWorldModel() { return iModel; }
+			WorldModel* getWorldModel();// { return iModel; }
         protected:
             G3D::Matrix3 iInvRot;
             float iInvScale;

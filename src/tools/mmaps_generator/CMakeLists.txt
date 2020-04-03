@@ -23,6 +23,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dep/zlib
   ${CMAKE_SOURCE_DIR}/dep/bzip2
   ${CMAKE_SOURCE_DIR}/dep/acelite
+  ${CMAKE_SOURCE_DIR}/dep/fmt
   ${CMAKE_SOURCE_DIR}/dep/g3dlite/include
   ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Recast
   ${CMAKE_SOURCE_DIR}/dep/recastnavigation/Detour
@@ -55,6 +56,7 @@ target_link_libraries(mmaps_generator
   ${ACE_LIBRARY}
   ${BZIP2_LIBRARIES}
   ${ZLIB_LIBRARIES}
+  ${Boost_LIBRARIES}
   Recast
   Detour
   collision

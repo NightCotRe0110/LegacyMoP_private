@@ -18,12 +18,14 @@
 
 #include "PathCommon.h"
 #include "MapBuilder.h"
-
+#include "MapDefines.h"
+#include "fmt/printf.h"
 #include "MapTree.h"
 #include "ModelInstance.h"
 #include "LoginDatabase.h"
 
 #include "DetourNavMeshBuilder.h"
+#include "DetourNavMesh.h"
 #include "DetourCommon.h"
 
 // These make the linker happy.
@@ -324,8 +326,8 @@ namespace MMAP
         //if (tileBits < 1) tileBits = 1;                                     // need at least one bit!
         //int polyBits = sizeof(dtPolyRef)*8 - SALT_MIN_BITS - tileBits;
 
-        int tileBits = STATIC_TILE_BITS;
-        int polyBits = STATIC_POLY_BITS;
+        int tileBits = DT_TILE_BITS;
+        int polyBits = DT_POLY_BITS;
 
         int maxTiles = tiles->size();
         int maxPolysPerTile = 1 << polyBits;
@@ -655,7 +657,8 @@ namespace MMAP
         rcVcopy(params.bmax, bmax);
         params.cs = config.cs;
         params.ch = config.ch;
-        params.tileSize = VERTEX_PER_MAP;
+		params.tileLayer = 0;
+		params.buildBvTree = true;
 
         // will hold final navmesh
         unsigned char* navData = NULL;

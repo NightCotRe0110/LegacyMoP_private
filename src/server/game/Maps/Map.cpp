@@ -46,7 +46,7 @@ union u_map_magic
 };
 
 u_map_magic MapMagic        = { {'M','A','P','S'} };
-u_map_magic MapVersionMagic = { {'v','1','.','8'} };
+u_map_magic MapVersionMagic = { {'v','1','.','3'} };
 u_map_magic MapAreaMagic    = { {'A','R','E','A'} };
 u_map_magic MapHeightMagic  = { {'M','H','G','T'} };
 u_map_magic MapLiquidMagic  = { {'M','L','I','Q'} };
@@ -202,9 +202,9 @@ Map::~Map()
 
 bool Map::ExistMap(uint32 mapid, int gx, int gy)
 {
-    int len = sWorld->GetDataPath().length()+strlen("maps/%04u_%02u_%02u.map")+1;
+    int len = sWorld->GetDataPath().length()+strlen("maps/%04u%02u%02u.map")+1;
     char* tmp = new char[len];
-    snprintf(tmp, len, const_cast<char *>((sWorld->GetDataPath() + "maps/%04u_%02u_%02u.map").c_str()), mapid, gx, gy);
+    snprintf(tmp, len, const_cast<char *>((sWorld->GetDataPath() + "maps/%04u%02u%02u.map").c_str()), mapid, gx, gy);
 
     bool ret = false;
     FILE* pf=fopen(tmp, "rb");

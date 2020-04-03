@@ -24,6 +24,7 @@
 #include "VMapManager2.h"
 #include "MapTree.h"
 #include "ModelInstance.h"
+#include "MapDefines.h"
 
 namespace MMAP
 {
@@ -88,7 +89,7 @@ namespace MMAP
         map_fileheader fheader;
         fread(&fheader, sizeof(map_fileheader), 1, mapFile);
 
-        if (fheader.versionMagic != *((uint32 const*)(MAP_VERSION_MAGIC)))
+        if (fheader.versionMagic.asUInt != *((uint32 const*)(MAP_VERSION_MAGIC)))
         {
             fclose(mapFile);
             printf("%s is the wrong version, please extract new .map files\n", mapFileName);
@@ -594,14 +595,14 @@ namespace MMAP
                 // transform data
                 float scale = instance.iScale;
                 G3D::Matrix3 rotation = G3D::Matrix3::fromEulerAnglesXYZ(G3D::pi()*instance.iRot.z/-180.f, G3D::pi()*instance.iRot.x/-180.f, G3D::pi()*instance.iRot.y/-180.f);
-                Vector3 position = instance.iPos;
+				G3D::Vector3 position = instance.iPos;
                 position.x -= 32*GRID_SIZE;
                 position.y -= 32*GRID_SIZE;
 
                 for (vector<GroupModel>::iterator it = groupModels.begin(); it != groupModels.end(); ++it)
                 {
-                    vector<Vector3> tempVertices;
-                    vector<Vector3> transformedVertices;
+                    vector<G3D::Vector3> tempVertices;
+                    vector<G3D::Vector3> transformedVertices;
                     vector<MeshTriangle> tempTriangles;
                     WmoLiquid* liquid = NULL;
 
@@ -618,10 +619,10 @@ namespace MMAP
                     // now handle liquid data
                     if (liquid)
                     {
-                        vector<Vector3> liqVerts;
+                        vector<G3D::Vector3> liqVerts;
                         vector<int> liqTris;
                         uint32 tilesX, tilesY, vertsX, vertsY;
-                        Vector3 corner;
+						G3D::Vector3 corner;
                         liquid->getPosInfo(tilesX, tilesY, corner);
                         vertsX = tilesX + 1;
                         vertsY = tilesY + 1;
@@ -650,11 +651,11 @@ namespace MMAP
                         // tile   = x*tilesY+y
                         // flag   = y*tilesY+x
 
-                        Vector3 vert;
+						G3D::Vector3 vert;
                         for (uint32 x = 0; x < vertsX; ++x)
                             for (uint32 y = 0; y < vertsY; ++y)
                             {
-                                vert = Vector3(corner.x + x * GRID_PART_SIZE, corner.y + y * GRID_PART_SIZE, data[y*vertsX + x]);
+                                vert = G3D::Vector3(corner.x + x * GRID_PART_SIZE, corner.y + y * GRID_PART_SIZE, data[y*vertsX + x]);
                                 vert = vert * rotation * scale + position;
                                 vert.x *= -1.f;
                                 vert.y *= -1.f;
@@ -705,12 +706,12 @@ namespace MMAP
     }
 
     /**************************************************************************/
-    void TerrainBuilder::transform(vector<Vector3> &source, vector<Vector3> &transformedVertices, float scale, G3D::Matrix3 &rotation, Vector3 &position)
+    void TerrainBuilder::transform(vector<G3D::Vector3> &source, vector<G3D::Vector3> &transformedVertices, float scale, G3D::Matrix3 &rotation, G3D::Vector3 &position)
     {
-        for (vector<Vector3>::iterator it = source.begin(); it != source.end(); ++it)
+        for (vector<G3D::Vector3>::iterator it = source.begin(); it != source.end(); ++it)
         {
             // apply tranform, then mirror along the horizontal axes
-            Vector3 v((*it) * rotation * scale + position);
+			G3D::Vector3 v((*it) * rotation * scale + position);
             v.x *= -1.f;
             v.y *= -1.f;
             transformedVertices.push_back(v);
@@ -718,9 +719,9 @@ namespace MMAP
     }
 
     /**************************************************************************/
-    void TerrainBuilder::copyVertices(vector<Vector3> &source, G3D::Array<float> &dest)
+    void TerrainBuilder::copyVertices(vector<G3D::Vector3> &source, G3D::Array<float> &dest)
     {
-        for (vector<Vector3>::iterator it = source.begin(); it != source.end(); ++it)
+        for (vector<G3D::Vector3>::iterator it = source.begin(); it != source.end(); ++it)
         {
             dest.push_back((*it).y);
             dest.push_back((*it).z);

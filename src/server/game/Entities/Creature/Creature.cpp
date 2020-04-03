@@ -1385,24 +1385,24 @@ void Creature::CalculateBaseDamage(const CreatureTemplate* cinfo, uint8 level)
     {
         uint32 index = (getClass()-1) * 123 + level-1;
         GtNpcDamageByClassEntry const* NpcDam = NULL;
-        switch (cinfo->expansion)
-        {
-            case 0:
-                NpcDam = sGtNpcDamageByClassStore.LookupEntry(index);
-                break;
-            case 1:
-                NpcDam = sGtNpcDamageByClassExp1Store.LookupEntry(index);
-                break;
-            case 2:
-                NpcDam = sGtNpcDamageByClassExp2Store.LookupEntry(index);
-                break;
-            case 3:
-                NpcDam = sGtNpcDamageByClassExp3Store.LookupEntry(index);
-                break;
-            case 4:
-                NpcDam = sGtNpcDamageByClassExp4Store.LookupEntry(index);
-                break;
-        }
+        //switch (cinfo->expansion)
+        //{
+        //    case 0:
+        //        NpcDam = sGtNpcDamageByClassStore.LookupEntry(index);
+        //        break;
+        //    case 1:
+        //        NpcDam = sGtNpcDamageByClassExp1Store.LookupEntry(index);
+        //        break;
+        //    case 2:
+        //        NpcDam = sGtNpcDamageByClassExp2Store.LookupEntry(index);
+        //        break;
+        //    case 3:
+        //        NpcDam = sGtNpcDamageByClassExp3Store.LookupEntry(index);
+        //        break;
+        //    case 4:
+        //        NpcDam = sGtNpcDamageByClassExp4Store.LookupEntry(index);
+        //        break;
+        //}
         if (NpcDam)
         {
             //TC_LOG_DEBUG("spell", "Creature::SelectLevel Entry %u expansion %u mindmg %f ratio %f level %u Class %u", cinfo->Entry, cinfo->expansion, mindmg, NpcDam->ratio, level, getClass());

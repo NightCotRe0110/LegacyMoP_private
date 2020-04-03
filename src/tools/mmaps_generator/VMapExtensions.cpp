@@ -49,7 +49,7 @@ namespace VMAP
     }
 
     // declared in src/shared/vmap/WorldModel.h
-    void GroupModel::getMeshData(vector<Vector3> &vertices, vector<MeshTriangle> &triangles, WmoLiquid* &liquid)
+    void GroupModel::getMeshData(vector<G3D::Vector3> &vertices, vector<MeshTriangle> &triangles, WmoLiquid* &liquid)
     {
         vertices = this->vertices;
         triangles = this->triangles;
@@ -57,13 +57,13 @@ namespace VMAP
     }
 
     // declared in src/shared/vmap/ModelInstance.h
-    WorldModel* const ModelInstance::getWorldModel()
+    WorldModel* ModelInstance::getWorldModel()
     {
         return iModel;
     }
 
     // declared in src/shared/vmap/WorldModel.h
-    void WmoLiquid::getPosInfo(uint32 &tilesX, uint32 &tilesY, Vector3 &corner) const
+    void WmoLiquid::getPosInfo(uint32 &tilesX, uint32 &tilesY, G3D::Vector3 &corner) const
     {
         tilesX = iTilesX;
         tilesY = iTilesY;

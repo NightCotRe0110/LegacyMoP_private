@@ -250,12 +250,12 @@ namespace VMAP
         return result;
     }
 
-    void WmoLiquid::getPosInfo(uint32 &tilesX, uint32 &tilesY, G3D::Vector3 &corner) const
-    {
-        tilesX = iTilesX;
-        tilesY = iTilesY;
-        corner = iCorner;
-    }
+    //void WmoLiquid::getPosInfo(uint32 &tilesX, uint32 &tilesY, G3D::Vector3 &corner) const
+    //{
+    //    tilesX = iTilesX;
+    //    tilesY = iTilesY;
+    //    corner = iCorner;
+    //}
 
     // ===================== GroupModel ==================================
 
@@ -351,36 +351,18 @@ namespace VMAP
         if (result && !readChunk(rf, chunk, "TRIM", 4)) result = false;
         if (result && fread(&chunkSize, sizeof(uint32), 1, rf) != 1) result = false;
         if (result && fread(&count, sizeof(uint32), 1, rf) != 1) result = false;
-        if (count)
-        {
-            if (result) triangles.resize(count);
-            if (result && fread(&triangles[0], sizeof(MeshTriangle), count, rf) != count) result = false;
+        if (result) triangles.resize(count);
+        if (result && fread(&triangles[0], sizeof(MeshTriangle), count, rf) != count) result = false;
 
-            // read mesh BIH
-            if (result && !readChunk(rf, chunk, "MBIH", 4)) result = false;
-            if (result) result = meshTree.readFromFile(rf);
-        }
-
-        // read triangle mesh
-        if (result && !readChunk(rf, chunk, "BSPX", 4)) result = false;
-        if (result && fread(&chunkSize, sizeof(uint32), 1, rf) != 1) result = false;
-        if (result && fread(&count, sizeof(uint32), 1, rf) != 1) result = false;
-        if (count)
-        {
-            if (result) collisions.resize(count);
-            if (result && fread(&collisions[0], sizeof(MeshTriangle), count, rf) != count) result = false;
-
-            // read mesh BIH
-            if (result && !readChunk(rf, chunk, "BBIH", 4)) result = false;
-            if (result) result = bspTree.readFromFile(rf);
-        }
+        // read mesh BIH
+        if (result && !readChunk(rf, chunk, "MBIH", 4)) result = false;
+        if (result) result = meshTree.readFromFile(rf);
 
         // write liquid data
         if (result && !readChunk(rf, chunk, "LIQU", 4)) result = false;
         if (result && fread(&chunkSize, sizeof(uint32), 1, rf) != 1) result = false;
         if (result && chunkSize > 0)
             result = WmoLiquid::readFromFile(rf, iLiquid);
-
         return result;
     }
 
@@ -463,12 +445,12 @@ namespace VMAP
         return 0;
     }
 
-    void GroupModel::getMeshData(std::vector<G3D::Vector3>& outVertices, std::vector<MeshTriangle>& outTriangles, WmoLiquid*& liquid)
-    {
-        outVertices = vertices;
-        outTriangles = triangles;
-        liquid = iLiquid;
-    }
+    //void GroupModel::getMeshData(std::vector<G3D::Vector3>& outVertices, std::vector<MeshTriangle>& outTriangles, WmoLiquid*& liquid)
+    //{
+    //    outVertices = vertices;
+    //    outTriangles = triangles;
+    //    liquid = iLiquid;
+    //}
 
     // ===================== WorldModel ==================================
 
@@ -671,8 +653,8 @@ namespace VMAP
         return result;
     }
 
-    void WorldModel::getGroupModels(std::vector<GroupModel>& outGroupModels)
-    {
-        outGroupModels = groupModels;
-    }
+    //void WorldModel::getGroupModels(std::vector<GroupModel>& outGroupModels)
+    //{
+    //    outGroupModels = groupModels;
+    //}
 }
